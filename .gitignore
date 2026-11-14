@@ -1,8 +1,3 @@
-/.codex
-/.cursor
-/.continue
-/.agents
-
 /node_modules
 /public/build
 /public/hot
@@ -56,6 +51,7 @@ build/
 
 ### VS Code ###
 .vscode/
+.continue/
 
 ### OS Files ###
 .DS_Store

@@ -1,58 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TALL Stack Modular Starter
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A robust, production-ready starter kit built for modern web development using the **TALL stack** (Tailwind CSS v4, Alpine.js via Livewire 4, Laravel 13, and TallStackUI v4). 
 
-## About Laravel
+This project provides a clean, modular architecture that allows you to scale effortlessly by organizing features into self-contained modules.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Key Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **TALL Stack Integration**: Tailwind CSS v4, Alpine.js (bundled with Livewire 4), and TallStackUI v4 components pre-configured.
+- **Modular Architecture**: Features are organized in `app/Modules/{Module}`, enabling cleaner code separation and better maintainability.
+- **Service-Oriented Design**: Uses `Services/` to encapsulate business logic, keeping your controllers and UI layer lightweight.
+- **Configurable Authentication**: Easily switch between `email` or `username` as the login identifier via `AUTH_LOGIN_ID` in your `.env` file.
+- **Spatie Permissions**: Integrated with Spatie Laravel-Permission for robust, role-based access control.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Getting Started
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To get started with this starter kit:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   composer install
+   npm install
+   ```
+3. Copy `.env.example` to `.env` and set up your database.
+4. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+5. Build frontend assets:
+   ```bash
+   npm run build
+   ```
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Guide to Expanding This Project
 
-```bash
-composer require laravel/boost --dev
+This project uses a **Modular Architecture (`app/Modules/{Module}`)** with `Services/` to encapsulate business logic.
 
-php artisan boost:install
-```
+### Adding New Domain Modules
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Create a directory under `app/Modules/{Module}` (e.g., `app/Modules/AccessControl` or `app/Modules/Billing`). [`ModuleServiceProvider`](app/Providers/ModuleServiceProvider.php) automatically discovers and registers it:
 
-## Contributing
+- `app/Modules/{Module}/Services/` — Domain business logic (e.g., `AuthService`).
+- `app/Modules/{Module}/routes.php` — Loaded under the `web` middleware group.
+- `app/Modules/{Module}/Views/` — Registered under a kebab-case Blade namespace (e.g., `view('access-control::index')`).
+- `app/Modules/{Module}/Livewire/` — Registered as a Livewire 4 namespace (e.g., `<livewire:access-control::role-table />`).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Changes Made
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Modular Architecture (`app/Modules/{Module}` with `Services/`)**
+   - Created [`ModuleServiceProvider`](app/Providers/ModuleServiceProvider.php) to auto-discover modules under `app/Modules/*`.
+   - Organized the **`Auth` Module** (`app/Modules/Auth`) with `AuthService`, controllers, requests, and views.
+   - Organized the **`Dashboard` Module** (`app/Modules/Dashboard`) with `dashboard::index` and module-specific routes.
 
-## Security Vulnerabilities
+2. **Standard Laravel `users` Table, Configurable Login ID (`email` or `username`), & Spatie Permission Setup**
+   - Implemented standard [database/migrations/0001_01_01_000000_create_users_table.php](database/migrations/0001_01_01_000000_create_users_table.php).
+   - Configurable login identifier via `AUTH_LOGIN_ID` in `.env` and `User::loginField()`.
+   - Configured Spatie `laravel-permission` using `model_id` morph key.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. **TALL Stack & TallStackUI v4 Configuration**
+   - Configured Vite and Tailwind CSS v4 in [resources/css/app.css](resources/css/app.css).
+   - Set up layouts in `resources/views/layouts/` with TALL stack assets and components.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Validation Results
+
+- **Frontend Build**: Compiled cleanly with Vite v8.3.6 and `@tailwindcss/vite` v4.3.4.
+- **Test Suite**: `10 passed (55 assertions)` in `AuthenticationTest`.
+- **Code Style**: Checked and fixed via `pint`.
+
+---
+
+## Optimization & Deployment
+
+1. **Configure `.env`**  
+  >* Set `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL`, `AUTH_LOGIN_ID`  
+  >* Switch `CACHE_STORE`, `SESSION_DRIVER`, and `QUEUE_CONNECTION` from `database` ([.env.example](.env.example)) to `redis`.
+2. **Install & build assets**  
+  >* `composer install --no-dev --optimize-autoloader`  
+  >production PHP autoloading
+  >* `npm ci && npm run build`  
+  >minified Vite/Tailwind assets.
+3. **Migrate & cache** **[NOT IN PRODUCTION! CAN OVERWRITE EXISTING DB]**  
+  >* Run `php artisan migrate --force` and `php artisan optimize` (avoid closure routes in `app/Modules/{Module}/routes.php` so route caching works).
+4. **Reset permission cache** **[OPTIONAL]**  
+>* Run `php artisan permission:cache-reset`  
+>if roles or permissions are seeded during deploy.  
+5. **Configure web server**  
+>* Point your web server root to `public/` and enable PHP OPcache.
+
+---
+
+## Contributing & License
+
+This project is built on the Laravel framework. The framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

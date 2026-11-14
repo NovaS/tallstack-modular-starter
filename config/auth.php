@@ -22,6 +22,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Login Identifier Column
+    |--------------------------------------------------------------------------
+    |
+    | This option controls which column on the users table is used to identify
+    | users during authentication. Supported values: "email", "username".
+    |
+    */
+
+    'login_id' => env('AUTH_LOGIN_ID', 'email'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Guards
     |--------------------------------------------------------------------------
     |
