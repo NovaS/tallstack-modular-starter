@@ -15,6 +15,7 @@
                 name="username"
                 type="text"
                 label="Username"
+                class="px-3"
                 :value="old('username')"
                 required
                 autofocus
@@ -26,6 +27,7 @@
                 name="email"
                 type="email"
                 label="Email"
+                class="px-3"
                 :value="old('email')"
                 required
                 autofocus

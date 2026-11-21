@@ -5,8 +5,8 @@
 
 @section('content')
     <x-card header="Account Overview">
-        <p class="text-sm text-gray-600 dark:text-dark-300">
-            You are signed in as <span class="font-medium text-gray-900 dark:text-white">{{ auth()->user()->email }}</span>.
+        <p class="text-sm text-slate-600 dark:text-dark-300">
+            You are signed in as <span class="font-medium text-slate-900 dark:text-white">{{ auth()->user()->email }}</span>.
         </p>
     </x-card>
 @endsection

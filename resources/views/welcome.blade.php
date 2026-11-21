@@ -2,7 +2,7 @@
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
     class="h-full scroll-smooth"
-    x-data="tallstackui_darkTheme()"
+    x-data="tallstackui_darkTheme({ default: 'light' })"
     x-bind:class="{ 'dark': darkTheme }"
 >
     <head>
@@ -12,13 +12,15 @@
 
         <title>{{ config('app.name', 'Basic TALL') }} — TALL Stack Starter &amp; TallStackUI Showcase</title>
 
+        @include('layouts.partials.theme-init')
+
         @fonts
 
         <tallstackui:script />
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="min-h-full bg-gray-50 font-sans text-gray-900 antialiased dark:bg-dark-900 dark:text-dark-50">
+    <body class="min-h-full bg-slate-50 font-sans text-slate-900 antialiased dark:bg-dark-900 dark:text-dark-50">
         <x-dialog />
         <x-toast />
 
@@ -46,13 +48,22 @@
                 </nav>
 
                 <div class="flex items-center gap-2.5">
-                    <x-theme-switch simple only-icons />
+                    <div class="flex min-h-5 min-w-8 items-center justify-center">
+                        <x-theme-switch simple sm />
+                    </div>
 
                     @if (Route::has('login'))
                         @auth
                             <x-button :href="url('/dashboard')" text="Dashboard" icon="squares-2x2" sm />
                         @else
-                            <x-button :href="route('login')" text="Log in" color="secondary" outline sm />
+                            <x-button
+                                :href="route('login')"
+                                text="Log in"
+                                color="slate"
+                                outline
+                                sm
+                                class="dark:text-slate-200 dark:border-slate-500 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                            />
                             @if (Route::has('register'))
                                 <x-button :href="route('register')" text="Register" sm />
                             @endif
@@ -93,9 +104,26 @@
                                 <x-button href="#components" text="Explore Components" icon="squares-plus" lg />
                                 @if (Route::has('register'))
                                     @auth
-                                        <x-button :href="url('/dashboard')" text="Open Dashboard" color="secondary" outline lg icon="arrow-right" position="right" />
+                                        <x-button
+                                            :href="url('/dashboard')"
+                                            text="Open Dashboard"
+                                            color="slate"
+                                            outline
+                                            lg
+                                            icon="arrow-right"
+                                            position="right"
+                                            class="dark:text-slate-200 dark:border-slate-500 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                                        />
                                     @else
-                                        <x-button :href="route('register')" text="Create Account" color="secondary" outline lg icon="user-plus" />
+                                        <x-button
+                                            :href="route('register')"
+                                            text="Create Account"
+                                            color="slate"
+                                            outline
+                                            lg
+                                            icon="user-plus"
+                                            class="dark:text-slate-200 dark:border-slate-500 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                                        />
                                     @endauth
                                 @endif
                             </div>
@@ -359,6 +387,7 @@
                                     label="Release Notes"
                                     placeholder="Summarize what changed in this release..."
                                     rows="4"
+                                    class="px-3"
                                 />
 
                                 <div class="flex flex-col gap-3 rounded-lg border border-gray-200 p-4 dark:border-dark-700">
@@ -453,7 +482,7 @@
                                 <ul class="flex flex-col gap-2 py-2 text-sm text-gray-600 dark:text-dark-300">
                                     <li class="flex items-center gap-2">
                                         <x-icon name="check" class="h-4 w-4 text-emerald-500" />
-                                        <span>Automatic dark mode via <code class="text-xs font-mono">tallstackui_darkTheme()</code></span>
+                                        <span>2-tone Bright/Dark theme via <code class="text-xs font-mono">tallstackui_darkTheme({ default: 'light' })</code> with zero-FOUC persistence</span>
                                     </li>
                                     <li class="flex items-center gap-2">
                                         <x-icon name="check" class="h-4 w-4 text-emerald-500" />
@@ -519,8 +548,16 @@
             </p>
             <x-slot:footer>
                 <div class="flex justify-end gap-2">
-                    <x-button text="Close" color="secondary" outline x-on:click="$tsui.close.modal('demo-modal')" />
                     <x-button
+                        type="button"
+                        text="Close"
+                        color="slate"
+                        outline
+                        class="dark:text-slate-200 dark:border-slate-500 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                        x-on:click="$tsui.close.modal('demo-modal')"
+                    />
+                    <x-button
+                        type="button"
                         text="Confirm &amp; Toast"
                         x-on:click="$tsui.close.modal('demo-modal'); $tsui.interaction('toast').success('Confirmed!', 'Modal action completed.').send()"
                     />
@@ -534,14 +571,22 @@
                 <p class="text-sm text-gray-600 dark:text-dark-300">
                     Slide-overs are ideal for filters, detail drawers, and quick configuration panels.
                 </p>
-                <x-input label="Workspace Name" value="{{ config('app.name', 'Basic TALL') }}" />
+                <x-input label="Workspace Name" class="px-3" value="{{ config('app.name', 'Basic TALL') }}" />
                 <x-toggle label="Enable live notifications" checked />
                 <x-toggle label="Compact sidebar layout" />
             </div>
             <x-slot:footer>
                 <div class="flex justify-end gap-2">
-                    <x-button text="Cancel" color="secondary" outline x-on:click="$tsui.close.slide('demo-slide')" />
                     <x-button
+                        type="button"
+                        text="Cancel"
+                        color="slate"
+                        outline
+                        class="dark:text-slate-200 dark:border-slate-500 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                        x-on:click="$tsui.close.slide('demo-slide')"
+                    />
+                    <x-button
+                        type="button"
                         text="Save Settings"
                         x-on:click="$tsui.close.slide('demo-slide'); $tsui.interaction('toast').success('Settings Saved', 'Slide-over preferences updated.').send()"
                     />

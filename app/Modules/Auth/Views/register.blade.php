@@ -12,6 +12,7 @@
             name="name"
             type="text"
             label="Name"
+            class="px-3"
             :value="old('name')"
             required
             autofocus
@@ -23,6 +24,7 @@
             name="username"
             type="text"
             label="Username"
+            class="px-3"
             :value="old('username')"
             required
             autocomplete="username"
@@ -33,6 +35,7 @@
             name="email"
             type="email"
             label="Email"
+            class="px-3"
             :value="old('email')"
             required
             autocomplete="email"
